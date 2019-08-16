@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yy_project_manage/networks/http_api.dart';
-import 'package:yy_project_manage/pages/home_page.dart';
+import 'package:yy_project_manage/pages/main_tabbar_page.dart';
 
 class YYLoginPage extends StatefulWidget {
   @override
@@ -148,12 +148,12 @@ class LoninStatePage extends State<StatefulWidget> {
   void _clickLogin() {
     print('登录' + '$_userName' + '$_password');
     HttpApi.httpLogin(_userName, _password, (respone) {
-      print("respone" + respone.jsonData + respone.message);
+      // print("respone" + respone.jsonData + respone.message);
       pushHomePage();
     });
   }
 
   void pushHomePage(){
-    Navigator.push(context, CupertinoPageRoute(builder:(context)=>YYhomePage()));
+    Navigator.push(context, CupertinoPageRoute(builder:(context)=>YYMainPage()));
   }
 }
