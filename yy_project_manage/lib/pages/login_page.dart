@@ -154,6 +154,6 @@ class LoninStatePage extends State<StatefulWidget> {
   }
 
   void pushHomePage(){
-    Navigator.push(context, CupertinoPageRoute(builder:(context)=>YYMainPage()));
+    Navigator.pushReplacement(context, CupertinoPageRoute(builder:(context)=>YYMainPage()));
   }
 }

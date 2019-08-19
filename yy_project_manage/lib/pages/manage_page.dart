@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'report_page.dart';
 
 class YYManagePage extends StatefulWidget {
   @override
@@ -8,25 +10,28 @@ class YYManagePage extends StatefulWidget {
 }
 
 class YYManageStatePage extends State<YYManagePage> {
-  // final Map<String, List> _items = {
-  //   '审批节点上报管理': [
-  //     {'title': '上报信息', 'image': ''},
-  //   ],
-  //   '替办管理':[{'title':''}]
-  // };
+  final List reports = _initReportList();
+  final List supervises = _initSuperviseList();
+  final List warns = _initWarnsList();
+  final List statistics = _initStatisticsList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('管理'),
+        leading: null,
       ),
       body: CustomScrollView(
         slivers: <Widget>[
           _createSliverHeader('审批节点上报管理'),
-          _createCell(),
+          _createCell(reports),
           _createSliverHeader('督办管理'),
-          _createCell(),
+          _createCell(supervises),
+          _createSliverHeader('预警管理'),
+          _createCell(warns),
+          _createSliverHeader('统计分析管理'),
+          _createCell(statistics),
         ],
       ),
     );
@@ -40,7 +45,7 @@ class YYManageStatePage extends State<YYManagePage> {
   }
 
   // cell
-  SliverPadding _createCell() {
+  SliverPadding _createCell(List<UnitItemModel> items) {
     return SliverPadding(
       padding: EdgeInsets.all(5),
       sliver: SliverGrid(
@@ -52,44 +57,100 @@ class YYManageStatePage extends State<YYManagePage> {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             //创建子widget
-            return _createItemCell();
+            return _createItemCell(items[index]);
           },
-          childCount: 4,
+          childCount: items.length,
         ),
       ),
     );
   }
 
-  Container _createItemCell() {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.ac_unit,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            '主题',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
+  GestureDetector _createItemCell(UnitItemModel item) {
+    return GestureDetector(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(
+              image: AssetImage(item.imageName),
+              width: 50,
+              height: 50,
             ),
-          ),
-        ],
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              item.title,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
       ),
+      onTap: (){
+        print('object---------------');
+        Navigator.push(context, CupertinoPageRoute(builder:item.pageBuilder));
+      },
     );
   }
+
+  static List<UnitItemModel> _initReportList() {
+    return [
+      UnitItemModel(
+          '上报信息', 'images/home_home_sel.png', (cxt) => YYReportPage(titleString: '上报信息',)),
+    ];
+  }
+
+  static List<UnitItemModel> _initSuperviseList() {
+    return [
+      UnitItemModel(
+          '督办查询', 'images/home_home_sel.png', (cxt) => YYReportPage(titleString: '督办查询',)),
+      UnitItemModel(
+          '发起督办', 'images/home_home_sel.png', (cxt) => YYReportPage(titleString: '发起督办',)),
+    ];
+  }
+
+  static List<UnitItemModel> _initWarnsList() {
+    return [
+      UnitItemModel(
+          '审批超市', 'images/home_home_sel.png', (cxt) => YYReportPage(titleString: '审批超市',)),
+      UnitItemModel(
+          '审批预警', 'images/home_home_sel.png', (cxt) => YYReportPage(titleString: '审批预警',)),
+    ];
+  }
+
+  static List<UnitItemModel> _initStatisticsList() {
+    return [
+      UnitItemModel(
+          '预警统计', 'images/home_home_sel.png', (cxt) => YYReportPage(titleString: '上报信息',)),
+      UnitItemModel(
+          '超时统计', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+      UnitItemModel(
+          '绩效统计', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+      UnitItemModel(
+          '人员超时', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+      UnitItemModel(
+          '预警统计', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+      UnitItemModel(
+          '超时统计', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+      UnitItemModel(
+          '绩效统计', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+      UnitItemModel(
+          '人员超时', 'images/home_home_sel.png', (cxt) => YYReportPage()),
+    ];
+  }
 }
+
 //
-class UnitItemModel<T> {
-  UnitItemModel(this.title,this.imageName,this.className);
+class UnitItemModel {
+  UnitItemModel(this.title, this.imageName, this.pageBuilder);
   String title;
   String imageName;
-  T className; 
+  WidgetBuilder pageBuilder;
 }
+
 //
 class GradHeader extends SliverPersistentHeaderDelegate {
   GradHeader(this.title);

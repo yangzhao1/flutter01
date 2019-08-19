@@ -36,7 +36,6 @@ class YYMainStatePage extends State<YYMainPage>{
       ),
     );
   }
-
   //底部tabbar
   void _onItemTapped(int index) {
     setState(() {
