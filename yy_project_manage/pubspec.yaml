@@ -26,6 +26,7 @@ dependencies:
   dio: ^2.1.13
   flutter_swiper: any
   easy_listview: ^0.1.3
+  fl_chart: any
 
   
 

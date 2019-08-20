@@ -14,7 +14,7 @@ class YYManageStatePage extends State<YYManagePage> {
   final List supervises = _initSuperviseList();
   final List warns = _initWarnsList();
   final List statistics = _initStatisticsList();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
